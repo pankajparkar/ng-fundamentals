@@ -1,11 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, model } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'nf-user-list',
   standalone: true,
-  imports: [],
+  imports: [
+    FormsModule,
+  ],
   template: `
-    <h2>User List</h2>
+    <h2>User List </h2>
+    <input
+      type="text"
+      [(ngModel)]="model"
+      placeholder="Search user ..."                     />
     <ul>
       @for (user of users; track $index) {
         <li>
@@ -250,6 +257,13 @@ export class UserListComponent {
       }
     }
   ];
+
+  myValue = '10';
+  model = model('123');
+
+  changeInput(event: Event | null) {
+    console.log((event?.target as HTMLInputElement).value);
+  }
 
   userClick(id: number) {
     console.log(id);

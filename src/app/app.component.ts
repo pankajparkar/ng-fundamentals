@@ -6,8 +6,11 @@ import { UserViewComponent } from "./components/user-view.component";
 @Component({
   selector: 'nf-root',
   standalone: true,
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  template: `
+    <nf-navbar></nf-navbar>
+    <nf-user-list></nf-user-list>
+    <!-- <nf-user-view></nf-user-view> -->
+  `,
   imports: [NavbarComponent, UserListComponent, UserViewComponent]
 })
 export class AppComponent {
