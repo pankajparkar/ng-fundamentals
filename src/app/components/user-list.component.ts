@@ -15,23 +15,17 @@ import { FormsModule } from '@angular/forms';
       placeholder="Search user ..."                     />
     <div class="user-list">
       @for (user of users; track $index) {
-        <!-- <li>
-          {{user.name}}
-          <button (click)="userClick(user.id)"><span>&#9999;</span></button>
-        </li> -->
         <div class="card">
           <div class="card-content">
             <h1>{{ user.name }}</h1>
             <p class="title">{{ user.company.name }}</p>
-            <p>{{user.email }} | {{ user.website }}</p>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-            <a href="#"><i class="fa fa-facebook"></i></a>
+            <p>📌 {{user.address.street}}, {{user.address.city}}, {{user.address.zipcode}}</p>
+            <p><small>{{user.email }} | {{ user.website }}</small></p>
           </div>
           <div class="card-actions">
             <button>📝</button>
             <button>🗑</button>
           </div>
-          <!-- <p><button>Contact</button></p> -->
         </div>
       }
     </div>
@@ -55,7 +49,6 @@ import { FormsModule } from '@angular/forms';
             color: grey;
             font-size: 18px;
           }
-
 
           h1, p {
             margin: 0;
