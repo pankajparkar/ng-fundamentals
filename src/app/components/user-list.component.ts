@@ -1,11 +1,13 @@
 import { Component, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'nf-user-list',
   standalone: true,
   imports: [
     FormsModule,
+    RouterLink,
   ],
   template: `
 <h2>User List </h2>
@@ -23,7 +25,7 @@ import { FormsModule } from '@angular/forms';
         <p><small>{{user.email }} | {{ user.website }}</small></p>
       </div>
       <div class="card-actions">
-        <button>📝</button>
+        <button [routerLink]="'/user/edit'">📝</button>
         <button>🗑</button>
       </div>
     </div>

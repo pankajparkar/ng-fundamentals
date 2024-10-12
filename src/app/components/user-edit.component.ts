@@ -49,18 +49,6 @@ import { Component } from '@angular/core';
           <input type="text" id="email" name="email" placeholder="Your email..">
         </div>
       </div>
-      <!-- <div class="row">
-        <div class="col-25">
-          <label for="country">Country</label>
-        </div>
-        <div class="col-75">
-          <select id="country" name="country">
-            <option value="australia">Australia</option>
-            <option value="canada">Canada</option>
-            <option value="usa">USA</option>
-          </select>
-        </div>
-      </div> -->
       <br>
       <div class="row">
         <input type="submit" value="Submit">
