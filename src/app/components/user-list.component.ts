@@ -1,4 +1,4 @@
-import { Component, computed, model } from '@angular/core';
+import { Component, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -8,27 +8,27 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
   ],
   template: `
-    <h2>User List </h2>
-    <div class="form-control">
-      <label for="fname">Search</label>
-      <input type="text" id="search" name="search" placeholder="Search..">
+<h2>User List </h2>
+<div class="form-control">
+  <label for="fname">Search</label>
+  <input type="text" id="search" name="search" placeholder="Search..">
+</div>
+<div class="user-list">
+  @for (user of users; track $index) {
+    <div class="card">
+      <div class="card-content">
+        <h1>{{ user.name }}</h1>
+        <p class="title">{{ user.company.name }}</p>
+        <p>📌 {{user.address.street}}, {{user.address.city}}, {{user.address.zipcode}}</p>
+        <p><small>{{user.email }} | {{ user.website }}</small></p>
+      </div>
+      <div class="card-actions">
+        <button>📝</button>
+        <button>🗑</button>
+      </div>
     </div>
-    <div class="user-list">
-      @for (user of users; track $index) {
-        <div class="card">
-          <div class="card-content">
-            <h1>{{ user.name }}</h1>
-            <p class="title">{{ user.company.name }}</p>
-            <p>📌 {{user.address.street}}, {{user.address.city}}, {{user.address.zipcode}}</p>
-            <p><small>{{user.email }} | {{ user.website }}</small></p>
-          </div>
-          <div class="card-actions">
-            <button>📝</button>
-            <button>🗑</button>
-          </div>
-        </div>
-      }
-    </div>
+  }
+</div>
   `,
   styles: `
 
@@ -53,7 +53,7 @@ import { FormsModule } from '@angular/forms';
         border-radius: 8px;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         display: flex;
-        margin: 5px;
+        margin: 12px;
         padding: 8px;
 
         .card-content {

@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { NavbarComponent } from "./components/navbar.component";
 import { UserListComponent } from "./components/user-list.component";
-import { UserViewComponent } from "./components/user-view.component";
+import { UserEditComponent } from "./components/user-edit.component";
 
 @Component({
   selector: 'nf-root',
   standalone: true,
   template: `
     <nf-navbar></nf-navbar>
-    <nf-user-list></nf-user-list>
-    <!-- <nf-user-view></nf-user-view> -->
+    <!-- <nf-user-list></nf-user-list> -->
+    <nf-user-edit></nf-user-edit>
   `,
-  imports: [NavbarComponent, UserListComponent, UserViewComponent]
+  imports: [NavbarComponent, UserListComponent, UserEditComponent]
 })
 export class AppComponent {
   title = 'ng-fundamentals';
