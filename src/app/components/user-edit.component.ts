@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 interface UserForm {
   id: FormControl<number>;
@@ -29,6 +31,9 @@ interface UserForm {
           </div>
           <div class="col-75">
             <input type="text" id="name" formControlName="name" placeholder="Your name..">
+            @if (nameControl.hasError('required')) {
+              <div>Name is required</div>
+            }
           </div>
         </div>
         <div class="row">
@@ -65,7 +70,7 @@ interface UserForm {
         </div>
         <br>
         <div class="row">
-          <input [disabled]="userEditForm.invalid" type="submit" value="Submit">
+          <input type="submit" value="Submit">
         </div>
       </form>
     </div>
@@ -143,6 +148,8 @@ interface UserForm {
 export class UserEditComponent {
 
   private readonly fb = inject(FormBuilder);
+  private readonly route = inject(ActivatedRoute);
+  private readonly userService = inject(UserService);
   public readonly userEditForm = this.fb.nonNullable.group<UserForm>({
     id: this.fb.nonNullable.control(0, [Validators.required]),
     name: this.fb.nonNullable.control('', [Validators.required]),
@@ -152,7 +159,22 @@ export class UserEditComponent {
     website: this.fb.nonNullable.control('', [Validators.required]),
   });
 
+  ngOnInit() {
+    this.getById();
+  }
+
+  get nameControl() {
+    return this.userEditForm.controls.email;
+  }
+
+  async getById() {
+    const id = +this.route.snapshot.params['id'];
+    const user = await this.userService.getUserById(id);
+    console.log(user, 'user');
+    this.userEditForm.patchValue(user);
+  }
+
   submit() {
-    console.log(this.userEditForm.valid);
+    console.log(this.userEditForm, this.userEditForm.valid);
   }
 }

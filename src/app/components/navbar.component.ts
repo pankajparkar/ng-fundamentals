@@ -1,13 +1,21 @@
 import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'nf-navbar',
   standalone: true,
-  imports: [],
+  imports: [
+    RouterLink,
+    RouterLinkActive
+  ],
   template: `
     <ul>
-      <li><a class="active" href="#home">Home</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li>
+        <a routerLinkActive="active" [routerLink]="'/home'">Home</a>
+      </li>
+      <li>
+        <a routerLinkActive="active" [routerLink]="'/user'">Users</a>
+      </li>
     </ul>
   `,
   styles: `
