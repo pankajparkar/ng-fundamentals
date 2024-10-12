@@ -1,9 +1,9 @@
 import { Component, computed, inject, model, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../services/user.service';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { User } from '../models/user.model';
+import { UserCardComponent } from "./user-card.component";
 
 @Component({
   selector: 'nf-user-list',
@@ -11,6 +11,7 @@ import { User } from '../models/user.model';
   imports: [
     FormsModule,
     RouterLink,
+    UserCardComponent,
   ],
   template: `
 <h2>User List </h2>
@@ -20,18 +21,10 @@ import { User } from '../models/user.model';
 </div>
 <div class="user-list">
   @for (user of searchResults(); track $index) {
-    <div class="card">
-      <div class="card-content">
-        <h1>{{ user.name }}</h1>
-        <p class="title">{{ user.company.name }}</p>
-        <p>📌 {{user.address.street}}, {{user.address.city}}, {{user.address.zipcode}}</p>
-        <p><small>{{user.email }} | {{ user.website }}</small></p>
-      </div>
-      <div class="card-actions">
-        <button [routerLink]="['/user/edit', user.id]">📝</button>
-        <button>🗑</button>
-      </div>
-    </div>
+    <nf-user-card
+      [user]="user" 
+      (editClick)="editUser($event)"
+      />
   }
 </div>
   `,
@@ -52,62 +45,11 @@ import { User } from '../models/user.model';
       border-radius: 4px;
       box-sizing: border-box;
     }
-
-    .user-list {
-      .card {
-        border-radius: 8px;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        display: flex;
-        margin: 12px;
-        padding: 8px;
-
-        .card-content {
-          align-items: start;
-          display: flex;
-          flex: 1 1 auto;
-          flex-flow: column;
-
-          .title {
-            color: grey;
-            font-size: 18px;
-          }
-
-          h1, p {
-            margin: 0;
-          }
-        }
-
-        .card-actions {
-          display: flex;
-          flex-flow: column nowrap;
-        }
-      }
-
-      button {
-        border: none;
-        outline: 0;
-        padding: 8px;
-        text-align: center;
-        cursor: pointer;
-        font-size: 18px;
-        margin: 4px;
-        border-radius: 8px;
-      }
-
-      a {
-        text-decoration: none;
-        font-size: 22px;
-        color: black;
-      }
-
-      button:hover, a:hover {
-        opacity: 0.7;
-      }
-    }
   `
 })
 export class UserListComponent {
   private userService = inject(UserService);
+  private router = inject(Router);
 
   users = signal<User[]>([]);
   search = model<string>('');
@@ -122,6 +64,11 @@ export class UserListComponent {
 
   ngOnInit() {
     this.getUsers();
+  }
+
+  editUser({ id }: User) {
+    console.log(id);
+    this.router.navigate(['/user/edit', id]);
   }
 
   searchResults = computed(() => {
