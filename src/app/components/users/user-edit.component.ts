@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { UserService } from '../services/user.service';
+import { UserService } from '../../services/user.service';
 
 interface UserForm {
   id: FormControl<number>;
@@ -68,7 +68,7 @@ interface UserForm {
         </div>
         <br>
         <div class="row">
-          <input type="submit" value="Submit">
+          <input [disabled]="userEditForm.invalid" type="submit" value="Submit">
         </div>
       </form>
     </div>
@@ -162,7 +162,7 @@ export class UserEditComponent {
   }
 
   get nameControl() {
-    return this.userEditForm.controls.email;
+    return this.userEditForm.controls.name;
   }
 
   async getById() {

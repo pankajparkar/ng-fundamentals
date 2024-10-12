@@ -1,9 +1,9 @@
 import { Component, computed, inject, model, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { UserService } from '../services/user.service';
-import { User } from '../models/user.model';
-import { UserCardComponent } from "./user-card.component";
+import { UserService } from '../../services/user.service';
+import { User } from '../../models/user.model';
+import { UserCardComponent } from './user-card.component';
 
 @Component({
   selector: 'nf-user-list',
@@ -21,10 +21,12 @@ import { UserCardComponent } from "./user-card.component";
     </div>
     <div class="user-list">
       @for (user of searchResults(); track $index) {
-        <nf-user-card
-          [user]="user" 
-          (editClick)="editUser($event)"
-          />
+        @defer {
+          <nf-user-card
+            [user]="user" 
+            (editClick)="editUser($event)"
+            />
+        }
       }
     </div>
   `,

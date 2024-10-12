@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
-import { User } from '../models/user.model';
 import { RouterLink } from '@angular/router';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'nf-user-card',
