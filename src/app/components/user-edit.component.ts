@@ -1,58 +1,72 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { JsonPipe } from '@angular/common';
+
+interface UserForm {
+  id: FormControl<number>;
+  name: FormControl<string>;
+  username: FormControl<string>;
+  email: FormControl<string>;
+  phone: FormControl<string>;
+  website: FormControl<string>;
+}
 
 @Component({
   selector: 'nf-user-edit',
   standalone: true,
-  imports: [],
+  imports: [
+    ReactiveFormsModule,
+    JsonPipe,
+  ],
   template: `
     <h2>Responsive Form</h2>
-
+    {{ userEditForm.value | json }}
     <div class="container">
-      <form action="/action_page.php">
-      <div class="row">
-        <div class="col-25">
-          <label for="name">Name</label>
+      <form [formGroup]="userEditForm" (ngSubmit)="submit()">
+        <div class="row">
+          <div class="col-25">
+            <label for="name">Name</label>
+          </div>
+          <div class="col-75">
+            <input type="text" id="name" formControlName="name" placeholder="Your name..">
+          </div>
         </div>
-        <div class="col-75">
-          <input type="text" id="name" name="name" placeholder="Your name..">
+        <div class="row">
+          <div class="col-25">
+            <label for="username">User Name</label>
+          </div>
+          <div class="col-75">
+            <input type="text" id="username" formControlName="username" placeholder="Your username..">
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-25">
-          <label for="username">User Name</label>
+        <div class="row">
+          <div class="col-25">
+            <label for="phone">Phone</label>
+          </div>
+          <div class="col-75">
+            <input type="text" id="phone" formControlName="phone" placeholder="Your Phone..">
+          </div>
         </div>
-        <div class="col-75">
-          <input type="text" id="username" name="userName" placeholder="Your username..">
+        <div class="row">
+          <div class="col-25">
+            <label for="website">Website</label>
+          </div>
+          <div class="col-75">
+            <input type="url" id="website" formControlName="website" placeholder="Your website..">
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-25">
-          <label for="phone">Phone</label>
+        <div class="row">
+          <div class="col-25">
+            <label for="email">Email</label>
+          </div>
+          <div class="col-75">
+            <input type="text" id="email" formControlName="email" placeholder="Your email..">
+          </div>
         </div>
-        <div class="col-75">
-          <input type="text" id="phone" name="phone" placeholder="Your Phone..">
+        <br>
+        <div class="row">
+          <input [disabled]="userEditForm.invalid" type="submit" value="Submit">
         </div>
-      </div>
-      <div class="row">
-        <div class="col-25">
-          <label for="website">Website</label>
-        </div>
-        <div class="col-75">
-          <input type="url" id="website" name="website" placeholder="Your website..">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-25">
-          <label for="email">Email</label>
-        </div>
-        <div class="col-75">
-          <input type="text" id="email" name="email" placeholder="Your email..">
-        </div>
-      </div>
-      <br>
-      <div class="row">
-        <input type="submit" value="Submit">
-      </div>
       </form>
     </div>
   `,
@@ -86,6 +100,10 @@ import { Component } from '@angular/core';
 
     input[type=submit]:hover {
       background-color: #45a049;
+    }
+
+    input[disabled] {
+      opacity: .5;
     }
 
     .container {
@@ -124,4 +142,17 @@ import { Component } from '@angular/core';
 })
 export class UserEditComponent {
 
+  private readonly fb = inject(FormBuilder);
+  public readonly userEditForm = this.fb.nonNullable.group<UserForm>({
+    id: this.fb.nonNullable.control(0, [Validators.required]),
+    name: this.fb.nonNullable.control('', [Validators.required]),
+    username: this.fb.nonNullable.control('', [Validators.required]),
+    email: this.fb.nonNullable.control('', [Validators.required]),
+    phone: this.fb.nonNullable.control('', [Validators.required]),
+    website: this.fb.nonNullable.control('', [Validators.required]),
+  });
+
+  submit() {
+    console.log(this.userEditForm.valid);
+  }
 }
