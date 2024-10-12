@@ -9,10 +9,10 @@ import { FormsModule } from '@angular/forms';
   ],
   template: `
     <h2>User List </h2>
-    <input
-      type="text"
-      [(ngModel)]="search"
-      placeholder="Search user ..."                     />
+    <div class="form-control">
+      <label for="fname">First Name</label>
+      <input type="text" id="fname" name="firstname" placeholder="Your name..">
+    </div>
     <div class="user-list">
       @for (user of users; track $index) {
         <div class="card">
@@ -31,6 +31,23 @@ import { FormsModule } from '@angular/forms';
     </div>
   `,
   styles: `
+
+    .form-control {
+      display: flex;
+      flex-flow: column nowrap;
+      margin: 12px;
+    }
+
+    input[type=text], select {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
     .user-list {
       .card {
         border-radius: 8px;
