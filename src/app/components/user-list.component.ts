@@ -14,22 +14,21 @@ import { UserCardComponent } from "./user-card.component";
     UserCardComponent,
   ],
   template: `
-<h2>User List </h2>
-<div class="form-control">
-  <label for="fname">Search</label>
-  <input type="text" id="search" name="search" [(ngModel)]="search" placeholder="Search..">
-</div>
-<div class="user-list">
-  @for (user of searchResults(); track $index) {
-    <nf-user-card
-      [user]="user" 
-      (editClick)="editUser($event)"
-      />
-  }
-</div>
+    <h2>User List </h2>
+    <div class="form-control">
+      <label for="fname">Search</label>
+      <input type="text" id="search" name="search" [(ngModel)]="search" placeholder="Search..">
+    </div>
+    <div class="user-list">
+      @for (user of searchResults(); track $index) {
+        <nf-user-card
+          [user]="user" 
+          (editClick)="editUser($event)"
+          />
+      }
+    </div>
   `,
   styles: `
-
     .form-control {
       display: flex;
       flex-flow: column nowrap;
