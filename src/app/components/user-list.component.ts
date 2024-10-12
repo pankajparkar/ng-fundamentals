@@ -10,8 +10,8 @@ import { FormsModule } from '@angular/forms';
   template: `
     <h2>User List </h2>
     <div class="form-control">
-      <label for="fname">First Name</label>
-      <input type="text" id="fname" name="firstname" placeholder="Your name..">
+      <label for="fname">Search</label>
+      <input type="text" id="search" name="search" placeholder="Search..">
     </div>
     <div class="user-list">
       @for (user of users; track $index) {
