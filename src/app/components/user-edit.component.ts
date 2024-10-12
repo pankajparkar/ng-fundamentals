@@ -18,11 +18,9 @@ interface UserForm {
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    JsonPipe,
   ],
   template: `
-    <h2>Responsive Form</h2>
-    {{ userEditForm.value | json }}
+    <h2>User Edit</h2>
     <div class="container">
       <form [formGroup]="userEditForm" (ngSubmit)="submit()">
         <div class="row">
