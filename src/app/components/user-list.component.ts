@@ -1,4 +1,4 @@
-import { Component, model } from '@angular/core';
+import { Component, computed, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -11,21 +11,88 @@ import { FormsModule } from '@angular/forms';
     <h2>User List </h2>
     <input
       type="text"
-      [(ngModel)]="model"
+      [(ngModel)]="search"
       placeholder="Search user ..."                     />
-    <ul>
+    <div class="user-list">
       @for (user of users; track $index) {
-        <li>
+        <!-- <li>
           {{user.name}}
           <button (click)="userClick(user.id)"><span>&#9999;</span></button>
-        </li>
+        </li> -->
+        <div class="card">
+          <div class="card-content">
+            <h1>{{ user.name }}</h1>
+            <p class="title">{{ user.company.name }}</p>
+            <p>{{user.email }} | {{ user.website }}</p>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="#"><i class="fa fa-facebook"></i></a>
+          </div>
+          <div class="card-actions">
+            <button>📝</button>
+            <button>🗑</button>
+          </div>
+          <!-- <p><button>Contact</button></p> -->
+        </div>
       }
-    </ul>
+    </div>
   `,
-  styles: ``
+  styles: `
+    .user-list {
+      .card {
+        border-radius: 8px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        display: flex;
+        margin: 5px;
+        padding: 8px;
+
+        .card-content {
+          align-items: start;
+          display: flex;
+          flex: 1 1 auto;
+          flex-flow: column;
+
+          .title {
+            color: grey;
+            font-size: 18px;
+          }
+
+
+          h1, p {
+            margin: 0;
+          }
+        }
+
+        .card-actions {
+          display: flex;
+          flex-flow: column nowrap;
+        }
+      }
+
+      button {
+        border: none;
+        outline: 0;
+        padding: 8px;
+        text-align: center;
+        cursor: pointer;
+        font-size: 18px;
+        margin: 4px;
+        border-radius: 8px;
+      }
+
+      a {
+        text-decoration: none;
+        font-size: 22px;
+        color: black;
+      }
+
+      button:hover, a:hover {
+        opacity: 0.7;
+      }
+    }
+  `
 })
 export class UserListComponent {
-  users = [
+  usersCopy = [
     {
       "id": 1,
       "name": "Leanne Graham",
@@ -258,11 +325,15 @@ export class UserListComponent {
     }
   ];
 
-  myValue = '10';
-  model = model('123');
+  users = JSON.parse(JSON.stringify(this.usersCopy));
 
-  changeInput(event: Event | null) {
-    console.log((event?.target as HTMLInputElement).value);
+  myValue = '10';
+  search = model<string | undefined>(undefined);
+
+  constructor() {
+  }
+
+  ngOnInit() {
   }
 
   userClick(id: number) {
